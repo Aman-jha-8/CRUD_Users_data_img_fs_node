@@ -1,0 +1,63 @@
+[
+  {
+    "user_id": "1707480264790",
+    "name": "Shiro Ghane",
+    "age": "21",
+    "city": "Tokyo",
+    "img_path": "1707480283066.jpg",
+    "created_at": "02/09/2024, 05:34:24 PM",
+    "updated_at": [
+      "9/2/2024, 5:34:43 pm"
+    ]
+  },
+  {
+    "user_id": "1707479693765",
+    "name": "Alien Robot",
+    "age": "43",
+    "city": "Mars",
+    "img_path": "1707479693765.jpg",
+    "created_at": "02/09/2024, 05:24:53 PM",
+    "updated_at": [
+      "9/2/2024, 5:26:39 pm"
+    ]
+  },
+  {
+    "user_id": "1706892739296",
+    "name": "Aman Jha",
+    "age": "21",
+    "city": "Kosi kalan (Mathura)",
+    "img_path": "1706892739296.png",
+    "created_at": "02/02/2024, 10:22:19 PM",
+    "updated_at": []
+  },
+  {
+    "user_id": "1706892708296",
+    "name": "Bill Gates",
+    "age": "68",
+    "city": "Florida",
+    "img_path": "1706892708296.jpeg",
+    "created_at": "02/02/2024, 10:21:48 PM",
+    "updated_at": []
+  },
+  {
+    "user_id": "1706892588154",
+    "name": "Lionel Messi",
+    "age": "36",
+    "city": "Argentina",
+    "img_path": "1706892588154.jpeg",
+    "created_at": "02/02/2024, 10:19:48 PM",
+    "updated_at": []
+  },
+  {
+    "user_id": "1706892531872",
+    "name": "Critiano Ronaldo",
+    "age": "39",
+    "city": "Portugal",
+    "img_path": "1706892531872.jpeg",
+    "created_at": "02/02/2024, 10:18:51 PM",
+    "updated_at": [
+      "9/2/2024, 5:22:37 pm",
+      "9/2/2024, 5:22:46 pm"
+    ]
+  }
+]
