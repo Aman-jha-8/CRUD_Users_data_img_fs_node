@@ -13,6 +13,30 @@ const app = express();
 // Middleware for parsing form data
 app.use(express.urlencoded({ extended: false }));
 
+//  Function to mantain all recieved requests history.
+function logRecord(req,res,next) {
+    const date = new Date().toLocaleString('en-US', {
+        timeZone: 'IST',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+    const path = req.path
+    fs.appendFile('log.txt',`${date} ${path}\n`, 'utf8' ,(err)=>{
+        if(err){
+
+            console.log(err.message)
+        }
+    })
+    next()
+}
+
+app.use(logRecord)
+
 // Set view engine and views directory
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -38,7 +62,7 @@ const saveUsers = (users) => {
         // Add timestamps if not already present
         if (!user.created_at) {
             user.created_at = new Date().toLocaleString('en-US', {
-                timeZone: 'UTC',
+                timeZone: 'IST',
                 day: '2-digit',
                 month: '2-digit',
                 year: 'numeric',
@@ -50,6 +74,11 @@ const saveUsers = (users) => {
         }
         if (!user.updated_at) {
             user.updated_at = [];
+        }
+        const rand = Math.floor( Math.random() * 2)
+        const nationality = rand == 0 ? 'Indian' : 'Foriegner';
+        if ( !user.nationality ) {
+            user.nationality = nationality;
         }
     });
 
@@ -73,13 +102,14 @@ app.get('/addUser', (req, res) => {
 
 // 'addUser' route
 app.post('/addUser', upload.single('uploadImage'), (req, res) => {
-    const { name, age, city, image } = req.body;
+    const { name, age, city, image , nationality } = req.body;
 
     // Validate other fields as needed
 
     const user_id = Date.now().toString();
     let img_path;
     let image_path;
+
 
     if (req.file) {
         // If the file is uploaded, handle the buffer and save to the 'images' folder
@@ -100,6 +130,7 @@ app.post('/addUser', upload.single('uploadImage'), (req, res) => {
         } catch (error) {
             console.error('Error writing image:', error);
         }
+        img_path = image_path;
     } else if (image) {
         // If an absolute path is provided, use it
         img_path = image;
@@ -109,8 +140,6 @@ app.post('/addUser', upload.single('uploadImage'), (req, res) => {
         img_path = 'default-image.jpg';
         console.log("default");
     }
-
-    img_path = image_path;
 
     // Format the date in a specific format (e.g., DD/MM/YYYY HH:mm:ss A)
     const currentDate = new Date();
@@ -130,6 +159,7 @@ app.post('/addUser', upload.single('uploadImage'), (req, res) => {
         name,
         age,
         city,
+        nationality,
         img_path,
         created_at: formattedDate, // Set the created_at timestamp
         updated_at: [] // Initialize updated_at as an empty array
@@ -177,7 +207,7 @@ app.get('/editUser/:user_id', (req, res) => {
 // Handle edit user form submission
 app.post('/editUser/:user_id', upload.single('image'), (req, res) => {
     const user_id = req.params.user_id;
-    const { name, age, city } = req.body;
+    const { name, age, city , nationality } = req.body;
 
     // Validate other fields as needed
 
@@ -228,6 +258,7 @@ app.post('/editUser/:user_id', upload.single('image'), (req, res) => {
             name,
             age,
             city,
+            nationality,
             img_path,
             created_at: users[userIndex].created_at,
             updated_at: [...users[userIndex].updated_at, new Date().toLocaleString()]
